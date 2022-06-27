@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import {useState, useEffect} from 'react';
+import BlogList from "./BlogList";
 
 const Home = () => {
 
-    const [name, setName] = useState("Demilade");
-    const [age, setAge] = useState(23);
-    const handleClick = () => {
-        setName("Temilade")
-        setAge(21)
-    }
+    const [blogs, setBlogs] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/blogs")
+            .then(res => res.json())
+            .then(data => setBlogs(data))
+    },[]);
 
     return (
         <div className={"home"}>
-            <h2>Home</h2>
-            <p>{name} is {age}< /p>
-            <button onClick={handleClick}>Click me</button>
+            <BlogList blogs={blogs} title={"All Blogs!"} />
         </div>
     );
 };
